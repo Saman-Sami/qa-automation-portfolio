@@ -5,7 +5,7 @@ const test = base.test.extend({
         await page.route(
             /(?:\.doubleclick\.net|fundingchoicesmessages\.google\.com|\.googlesyndication\.com)/,
             route => { 
-                console.log('route matched: block')
+                //console.log('route matched: block')
                 route.abort();
             });
         await use(page);
