@@ -70,6 +70,15 @@ export default defineConfig({
     //   name: 'Google Chrome',
     //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
     // },
+
+    {
+      name: 'api',
+      testDir: './tests/api',
+      use: {
+        baseURL: 'https://automationexercise.com/api/'
+      }
+      
+    },
   ],
 
   /* Run your local dev server before starting the tests */
