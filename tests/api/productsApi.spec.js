@@ -1,26 +1,15 @@
 const { test, expect, request } = require('@playwright/test');
+const { productSchema, productsListResponseSchema } = require('../../utils/schemas');
+//import { productSchema } from '../../utils/schemas';
 
 test('Product List API Success Test', async({request}) => {
     const productResponse = await request.get('productsList');
     const respJson = await productResponse.json();
-    console.log(respJson);
+    //console.log(respJson);
     expect(productResponse.status()).toBe(200);
-    expect(respJson.responseCode).toBe(200);
-    expect.soft(Array.isArray(respJson.products)).toBeTruthy();
-    const arr = respJson.products;
-    expect.soft(arr.length).toBeGreaterThan(0);
-    expect.soft(arr[0].id).toBeDefined();
-    expect.soft(arr[0].price).toBeDefined();
-    expect.soft(arr[0].brand).toBeDefined();
-    expect.soft(arr[0].category).toBeInstanceOf(Object);
-    const obj = arr[0].category;
-    expect.soft(obj.usertype).toBeInstanceOf(Object);
-    expect.soft(obj.usertype.usertype).toBeDefined();
-    expect.soft(obj.category).toBeDefined();
-    /*arr.forEach(element => {
-        expect.soft(element.id).toBeDefined();
-        expect.soft(element.price).toBeDefined();
-    });*/
+    const prodResponse = productsListResponseSchema.safeParse(respJson);
+    //console.log(prodResponse);
+    expect(prodResponse.success, JSON.stringify(prodResponse.error?.issues)).toBeTruthy();
 })
 
 test('Search Product Success Test', async({request}) => {
@@ -32,10 +21,13 @@ test('Search Product Success Test', async({request}) => {
     const respJson = await productResponse.json();
     //console.log(respJson);
     expect(productResponse.status()).toBe(200);
-    expect(respJson.responseCode).toBe(200);
     const allProducts = respJson.products;
-    expect(allProducts).toBeDefined();
     expect(allProducts.length).toBeGreaterThan(0);
+
+    //Reusing productsListResponseSchema since search products returns the same shape
+    const prodResponse = productsListResponseSchema.safeParse(respJson);
+    //console.log(prodResponse);
+    expect(prodResponse.success, JSON.stringify(prodResponse.error?.issues)).toBeTruthy();
 
     //Check whether the results have relevancy to search
     const irrelevantProducts = allProducts.filter((item) => {
