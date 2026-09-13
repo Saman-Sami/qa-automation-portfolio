@@ -1,7 +1,7 @@
 const Database = require('better-sqlite3');
 const path = require('node:path');
 
-function insertUser(name, email, status){
+function insertUser(name, email, status='active'){
     const db = new Database(path.join(__dirname, '../data/tempDb.db'), { fileMustExist: true });
     const insrt = db.prepare('INSERT INTO users (name, email, status) VALUES (?, ?, ?)');
     const result = insrt.run(name, email, status);

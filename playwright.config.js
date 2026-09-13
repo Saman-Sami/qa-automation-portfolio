@@ -38,16 +38,19 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
+      testDir: './tests/ui',
       use: { ...devices['Desktop Chrome'] },
     },
 
     {
       name: 'firefox',
+      testDir: './tests/ui',
       use: { ...devices['Desktop Firefox'] },
     },
 
     {
       name: 'webkit',
+      testDir: './tests/ui',
       use: { ...devices['Desktop Safari'] },
     },
 
@@ -78,6 +81,12 @@ export default defineConfig({
         baseURL: 'https://automationexercise.com/api/'
       }
       
+    },
+
+    {
+      name: 'db',
+      testDir: './tests/db',
+      fullyParallel: false,
     },
   ],
 
