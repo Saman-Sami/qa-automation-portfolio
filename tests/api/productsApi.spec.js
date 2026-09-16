@@ -1,6 +1,5 @@
 const { test, expect, request } = require('@playwright/test');
 const { productSchema, productsListResponseSchema } = require('../../utils/schemas');
-//import { productSchema } from '../../utils/schemas';
 
 test('Product List API Success Test', async({request}) => {
     const productResponse = await request.get('productsList');
